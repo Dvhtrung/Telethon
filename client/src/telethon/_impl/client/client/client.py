@@ -219,12 +219,7 @@ class Client:
 
     # Begin partially @generated
 
-    def add_event_handler(
-        self,
-        handler: Callable[[Event], Awaitable[Any]],
-        event_cls: Type[Event],
-        filter: Optional[Filter] = None,
-    ) -> None:
+    def add_event_handler(self, handler: Callable[[Event], Awaitable[Any]], event_cls: Type[Event], filter: Optional[Filter]=None) -> None:
         """
         Register a callable to be invoked when the provided event type occurs.
 
@@ -289,9 +284,7 @@ class Client:
         """
         return await bot_sign_in(self, token)
 
-    async def check_password(
-        self, token: PasswordToken, password: Union[str, bytes]
-    ) -> User:
+    async def check_password(self, token: PasswordToken, password: Union[str, bytes]) -> User:
         """
         Check the two-factor-authentication (2FA) password.
         If it is correct, completes the login.
@@ -359,9 +352,7 @@ class Client:
         """
         await delete_dialog(self, chat)
 
-    async def delete_messages(
-        self, chat: ChatLike, message_ids: List[int], *, revoke: bool = True
-    ) -> int:
+    async def delete_messages(self, chat: ChatLike, message_ids: List[int], *, revoke: bool=True) -> int:
         """
         Delete messages.
 
@@ -449,16 +440,7 @@ class Client:
         """
         await download(self, media, file)
 
-    async def edit_message(
-        self,
-        chat: ChatLike,
-        message_id: int,
-        *,
-        text: Optional[str] = None,
-        markdown: Optional[str] = None,
-        html: Optional[str] = None,
-        link_preview: Optional[bool] = None,
-    ) -> Message:
+    async def edit_message(self, chat: ChatLike, message_id: int, *, text: Optional[str]=None, markdown: Optional[str]=None, html: Optional[str]=None, link_preview: Optional[bool]=None) -> Message:
         """
         Edit a message.
 
@@ -486,19 +468,9 @@ class Client:
 
             :meth:`telethon.types.Message.edit`
         """
-        return await edit_message(
-            self,
-            chat,
-            message_id,
-            text=text,
-            markdown=markdown,
-            html=html,
-            link_preview=link_preview,
-        )
+        return await edit_message(self, chat, message_id, text=text, markdown=markdown, html=html, link_preview=link_preview)
 
-    async def forward_messages(
-        self, target: ChatLike, message_ids: List[int], source: ChatLike
-    ) -> List[Message]:
+    async def forward_messages(self, target: ChatLike, message_ids: List[int], source: ChatLike) -> List[Message]:
         """
         Forward messages from one :term:`chat` to another.
 
@@ -631,9 +603,7 @@ class Client:
         """
         return get_file_bytes(self, media)
 
-    def get_handler_filter(
-        self, handler: Callable[[Event], Awaitable[Any]]
-    ) -> Optional[Filter]:
+    def get_handler_filter(self, handler: Callable[[Event], Awaitable[Any]]) -> Optional[Filter]:
         """
         Get the filter associated to the given event handler.
 
@@ -681,14 +651,7 @@ class Client:
         """
         return await get_me(self)
 
-    def get_messages(
-        self,
-        chat: ChatLike,
-        limit: Optional[int] = None,
-        *,
-        offset_id: Optional[int] = None,
-        offset_date: Optional[datetime.datetime] = None,
-    ) -> AsyncList[Message]:
+    def get_messages(self, chat: ChatLike, limit: Optional[int]=None, *, offset_id: Optional[int]=None, offset_date: Optional[datetime.datetime]=None) -> AsyncList[Message]:
         """
         Get the message history from a :term:`chat`.
 
@@ -721,13 +684,9 @@ class Client:
             async for message in client.get_messages(chat, offset_date=datetime(2023, 1, 1)):
                 print(message.sender.full_name, ':', message.html_text)
         """
-        return get_messages(
-            self, chat, limit, offset_id=offset_id, offset_date=offset_date
-        )
+        return get_messages(self, chat, limit, offset_id=offset_id, offset_date=offset_date)
 
-    def get_messages_with_ids(
-        self, chat: ChatLike, message_ids: List[int]
-    ) -> AsyncList[Message]:
+    def get_messages_with_ids(self, chat: ChatLike, message_ids: List[int]) -> AsyncList[Message]:
         return get_messages_with_ids(self, chat, message_ids)
 
     def get_participants(self, chat: ChatLike) -> AsyncList[Participant]:
@@ -766,9 +725,7 @@ class Client:
         """
         return get_profile_photos(self, chat)
 
-    async def inline_query(
-        self, bot: ChatLike, query: str = "", *, chat: Optional[ChatLike] = None
-    ) -> AsyncIterator[InlineResult]:
+    async def inline_query(self, bot: ChatLike, query: str='', *, chat: Optional[ChatLike]=None) -> AsyncIterator[InlineResult]:
         """
         Perform a *@bot inline query*.
 
@@ -805,9 +762,7 @@ class Client:
         """
         return await inline_query(self, bot, query, chat=chat)
 
-    async def interactive_login(
-        self, phone_or_token: Optional[str] = None, *, password: Optional[str] = None
-    ) -> User:
+    async def interactive_login(self, phone_or_token: Optional[str]=None, *, password: Optional[str]=None) -> User:
         """
         Begin an interactive login if needed.
         If the account was already logged-in, this method simply returns :term:`yourself`.
@@ -851,11 +806,7 @@ class Client:
         """
         return await is_authorized(self)
 
-    def on(
-        self, event_cls: Type[Event], filter: Optional[Filter] = None
-    ) -> Callable[
-        [Callable[[Event], Awaitable[Any]]], Callable[[Event], Awaitable[Any]]
-    ]:
+    def on(self, event_cls: Type[Event], filter: Optional[Filter]=None) -> Callable[[Callable[[Event], Awaitable[Any]]], Callable[[Event], Awaitable[Any]]]:
         """
         Register the decorated function to be invoked when the provided event type occurs.
 
@@ -995,14 +946,7 @@ class Client:
     async def run_until_disconnected(self) -> None:
         await run_until_disconnected(self)
 
-    def search_all_messages(
-        self,
-        limit: Optional[int] = None,
-        *,
-        query: Optional[str] = None,
-        offset_id: Optional[int] = None,
-        offset_date: Optional[datetime.datetime] = None,
-    ) -> AsyncList[Message]:
+    def search_all_messages(self, limit: Optional[int]=None, *, query: Optional[str]=None, offset_id: Optional[int]=None, offset_date: Optional[datetime.datetime]=None) -> AsyncList[Message]:
         """
         Perform a global message search.
         This is used to search messages in no particular chat (i.e. everywhere possible).
@@ -1034,19 +978,9 @@ class Client:
             async for message in client.search_all_messages(query='hello'):
                 print(message.text)
         """
-        return search_all_messages(
-            self, limit, query=query, offset_id=offset_id, offset_date=offset_date
-        )
+        return search_all_messages(self, limit, query=query, offset_id=offset_id, offset_date=offset_date)
 
-    def search_messages(
-        self,
-        chat: ChatLike,
-        limit: Optional[int] = None,
-        *,
-        query: Optional[str] = None,
-        offset_id: Optional[int] = None,
-        offset_date: Optional[datetime.datetime] = None,
-    ) -> AsyncList[Message]:
+    def search_messages(self, chat: ChatLike, limit: Optional[int]=None, *, query: Optional[str]=None, offset_id: Optional[int]=None, offset_date: Optional[datetime.datetime]=None) -> AsyncList[Message]:
         """
         Search messages in a chat.
 
@@ -1077,27 +1011,9 @@ class Client:
             async for message in client.search_messages(chat, query='hello'):
                 print(message.text)
         """
-        return search_messages(
-            self, chat, limit, query=query, offset_id=offset_id, offset_date=offset_date
-        )
+        return search_messages(self, chat, limit, query=query, offset_id=offset_id, offset_date=offset_date)
 
-    async def send_audio(
-        self,
-        chat: ChatLike,
-        path: Optional[Union[str, Path, File]] = None,
-        *,
-        url: Optional[str] = None,
-        file: Optional[InFileLike] = None,
-        size: Optional[int] = None,
-        name: Optional[str] = None,
-        duration: Optional[float] = None,
-        voice: bool = False,
-        title: Optional[str] = None,
-        performer: Optional[str] = None,
-        caption: Optional[str] = None,
-        caption_markdown: Optional[str] = None,
-        caption_html: Optional[str] = None,
-    ) -> Message:
+    async def send_audio(self, chat: ChatLike, path: Optional[Union[str, Path, File]]=None, *, url: Optional[str]=None, file: Optional[InFileLike]=None, size: Optional[int]=None, name: Optional[str]=None, duration: Optional[float]=None, voice: bool=False, title: Optional[str]=None, performer: Optional[str]=None, caption: Optional[str]=None, caption_markdown: Optional[str]=None, caption_html: Optional[str]=None) -> Message:
         """
         Send an audio file.
 
@@ -1118,50 +1034,9 @@ class Client:
 
             await client.send_audio(chat, 'file.ogg', voice=True)
         """
-        return await send_audio(
-            self,
-            chat,
-            path,
-            url=url,
-            file=file,
-            size=size,
-            name=name,
-            duration=duration,
-            voice=voice,
-            title=title,
-            performer=performer,
-            caption=caption,
-            caption_markdown=caption_markdown,
-            caption_html=caption_html,
-        )
+        return await send_audio(self, chat, path, url=url, file=file, size=size, name=name, duration=duration, voice=voice, title=title, performer=performer, caption=caption, caption_markdown=caption_markdown, caption_html=caption_html)
 
-    async def send_file(
-        self,
-        chat: ChatLike,
-        path: Optional[Union[str, Path, File]] = None,
-        *,
-        url: Optional[str] = None,
-        file: Optional[InFileLike] = None,
-        size: Optional[int] = None,
-        name: Optional[str] = None,
-        mime_type: Optional[str] = None,
-        compress: bool = False,
-        animated: bool = False,
-        duration: Optional[float] = None,
-        voice: bool = False,
-        title: Optional[str] = None,
-        performer: Optional[str] = None,
-        emoji: Optional[str] = None,
-        emoji_sticker: Optional[str] = None,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
-        round: bool = False,
-        supports_streaming: bool = False,
-        muted: bool = False,
-        caption: Optional[str] = None,
-        caption_markdown: Optional[str] = None,
-        caption_html: Optional[str] = None,
-    ) -> Message:
+    async def send_file(self, chat: ChatLike, path: Optional[Union[str, Path, File]]=None, *, url: Optional[str]=None, file: Optional[InFileLike]=None, size: Optional[int]=None, name: Optional[str]=None, mime_type: Optional[str]=None, compress: bool=False, animated: bool=False, duration: Optional[float]=None, voice: bool=False, title: Optional[str]=None, performer: Optional[str]=None, emoji: Optional[str]=None, emoji_sticker: Optional[str]=None, width: Optional[int]=None, height: Optional[int]=None, round: bool=False, supports_streaming: bool=False, muted: bool=False, caption: Optional[str]=None, caption_markdown: Optional[str]=None, caption_html: Optional[str]=None) -> Message:
         """
         Send any type of file with any amount of attributes.
 
@@ -1201,43 +1076,9 @@ class Client:
             login_token = await client.request_login_code('+1 23 456...')
             print(login_token.timeout, 'seconds before code expires')
         """
-        return await send_file(
-            self,
-            chat,
-            path,
-            url=url,
-            file=file,
-            size=size,
-            name=name,
-            mime_type=mime_type,
-            compress=compress,
-            animated=animated,
-            duration=duration,
-            voice=voice,
-            title=title,
-            performer=performer,
-            emoji=emoji,
-            emoji_sticker=emoji_sticker,
-            width=width,
-            height=height,
-            round=round,
-            supports_streaming=supports_streaming,
-            muted=muted,
-            caption=caption,
-            caption_markdown=caption_markdown,
-            caption_html=caption_html,
-        )
+        return await send_file(self, chat, path, url=url, file=file, size=size, name=name, mime_type=mime_type, compress=compress, animated=animated, duration=duration, voice=voice, title=title, performer=performer, emoji=emoji, emoji_sticker=emoji_sticker, width=width, height=height, round=round, supports_streaming=supports_streaming, muted=muted, caption=caption, caption_markdown=caption_markdown, caption_html=caption_html)
 
-    async def send_message(
-        self,
-        chat: ChatLike,
-        text: Optional[Union[str, Message]] = None,
-        *,
-        markdown: Optional[str] = None,
-        html: Optional[str] = None,
-        link_preview: bool = False,
-        reply_to: Optional[int] = None,
-    ) -> Message:
+    async def send_message(self, chat: ChatLike, text: Optional[Union[str, Message]]=None, *, markdown: Optional[str]=None, html: Optional[str]=None, link_preview: Optional[bool]=None, reply_to: Optional[int]=None) -> Message:
         """
         Send a message.
 
@@ -1276,32 +1117,9 @@ class Client:
 
             await client.send_message(chat, markdown='**Hello!**')
         """
-        return await send_message(
-            self,
-            chat,
-            text,
-            markdown=markdown,
-            html=html,
-            link_preview=link_preview,
-            reply_to=reply_to,
-        )
+        return await send_message(self, chat, text, markdown=markdown, html=html, link_preview=link_preview, reply_to=reply_to)
 
-    async def send_photo(
-        self,
-        chat: ChatLike,
-        path: Optional[Union[str, Path, File]] = None,
-        *,
-        url: Optional[str] = None,
-        file: Optional[InFileLike] = None,
-        size: Optional[int] = None,
-        name: Optional[str] = None,
-        compress: bool = True,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
-        caption: Optional[str] = None,
-        caption_markdown: Optional[str] = None,
-        caption_html: Optional[str] = None,
-    ) -> Message:
+    async def send_photo(self, chat: ChatLike, path: Optional[Union[str, Path, File]]=None, *, url: Optional[str]=None, file: Optional[InFileLike]=None, size: Optional[int]=None, name: Optional[str]=None, compress: bool=True, width: Optional[int]=None, height: Optional[int]=None, caption: Optional[str]=None, caption_markdown: Optional[str]=None, caption_html: Optional[str]=None) -> Message:
         """
         Send a photo file.
 
@@ -1326,40 +1144,9 @@ class Client:
 
             await client.send_photo(chat, 'photo.jpg', caption='Check this out!')
         """
-        return await send_photo(
-            self,
-            chat,
-            path,
-            url=url,
-            file=file,
-            size=size,
-            name=name,
-            compress=compress,
-            width=width,
-            height=height,
-            caption=caption,
-            caption_markdown=caption_markdown,
-            caption_html=caption_html,
-        )
+        return await send_photo(self, chat, path, url=url, file=file, size=size, name=name, compress=compress, width=width, height=height, caption=caption, caption_markdown=caption_markdown, caption_html=caption_html)
 
-    async def send_video(
-        self,
-        chat: ChatLike,
-        path: Optional[Union[str, Path, File]] = None,
-        *,
-        url: Optional[str] = None,
-        file: Optional[InFileLike] = None,
-        size: Optional[int] = None,
-        name: Optional[str] = None,
-        duration: Optional[float] = None,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
-        round: bool = False,
-        supports_streaming: bool = False,
-        caption: Optional[str] = None,
-        caption_markdown: Optional[str] = None,
-        caption_html: Optional[str] = None,
-    ) -> Message:
+    async def send_video(self, chat: ChatLike, path: Optional[Union[str, Path, File]]=None, *, url: Optional[str]=None, file: Optional[InFileLike]=None, size: Optional[int]=None, name: Optional[str]=None, duration: Optional[float]=None, width: Optional[int]=None, height: Optional[int]=None, round: bool=False, supports_streaming: bool=False, caption: Optional[str]=None, caption_markdown: Optional[str]=None, caption_html: Optional[str]=None) -> Message:
         """
         Send a video file.
 
@@ -1380,23 +1167,7 @@ class Client:
 
             await client.send_video(chat, 'video.mp4', caption_markdown='*I cannot believe this just happened*')
         """
-        return await send_video(
-            self,
-            chat,
-            path,
-            url=url,
-            file=file,
-            size=size,
-            name=name,
-            duration=duration,
-            width=width,
-            height=height,
-            round=round,
-            supports_streaming=supports_streaming,
-            caption=caption,
-            caption_markdown=caption_markdown,
-            caption_html=caption_html,
-        )
+        return await send_video(self, chat, path, url=url, file=file, size=size, name=name, duration=duration, width=width, height=height, round=round, supports_streaming=supports_streaming, caption=caption, caption_markdown=caption_markdown, caption_html=caption_html)
 
     def set_admin_rights(self, chat: ChatLike, user: ChatLike) -> None:
         set_admin_rights(self, chat, user)
@@ -1407,11 +1178,7 @@ class Client:
     def set_default_rights(self, chat: ChatLike, user: ChatLike) -> None:
         set_default_rights(self, chat, user)
 
-    def set_handler_filter(
-        self,
-        handler: Callable[[Event], Awaitable[Any]],
-        filter: Optional[Filter] = None,
-    ) -> None:
+    def set_handler_filter(self, handler: Callable[[Event], Awaitable[Any]], filter: Optional[Filter]=None) -> None:
         """
         Set the filter to use for the given event handler.
 
@@ -1476,9 +1243,7 @@ class Client:
         """
         await sign_out(self)
 
-    async def unpin_message(
-        self, chat: ChatLike, message_id: Union[int, Literal["all"]]
-    ) -> None:
+    async def unpin_message(self, chat: ChatLike, message_id: Union[int, Literal['all']]) -> None:
         """
         Unpin one or all messages from the top.
 
